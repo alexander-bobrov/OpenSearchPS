@@ -1,6 +1,6 @@
 function Set-Credentials {    
     param (
-        [uri]$OpenSearchUri,
+        [String]$Uri,
         [PSCredential]$Credentials
     )
 
@@ -28,14 +28,14 @@ function Set-Credentials {
     Process {
         foreach ($command in $moduleCommands) {
 
-            $parameter = "OpenSearchUri"
-            if ($OpenSearchUri -and ($command.Parameters.Keys -contains $parameter)) {
-                Add-DefaultParameter -Command $command -Parameter $parameter -Value ($BaseURi.AbsoluteUri.TrimEnd('/'))
+            $parameter = "Uri"
+            if ($Uri -and ($command.Parameters.Keys -contains $parameter)) {
+                Add-DefaultParameter -Command $command -Parameter $parameter -Value $Uri
             }
 
             $parameter = "Credentials"
             if ($Credentials -and ($command.Parameters.Keys -contains $parameter)) {
-                Add-DefaultParameter -Command $command -Parameter $parameter -Value $Credential
+                Add-DefaultParameter -Command $command -Parameter $parameter -Value $Credentials
             }
         }
     }

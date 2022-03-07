@@ -1,18 +1,23 @@
 function Invoke-SQL {
+    [CmdletBinding()]
     param (
-        [string]$Query,
-        [uri]$OpenSearchUri,
+        [String]$Query,
+        [String]$Uri,
         [PSCredential]$Credentials
     )
     
     Begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
 
-        $Uri = "$OpenSearchUri/_plugins/_sql?sql=$Query"
+        $Uri = "$Uri/_opendistro/_sql"
+
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] $Uri"
+        $Body = @{"query" = "$Query"} | ConvertTo-Json
+
     }
 
     Process {
-       Invoke-Method -Uri $Uri -Credentials $Credentials
+       Invoke-Method -Uri $Uri -Credentials $Credentials -Body $Body -Method 'POST'
         
     }
 
