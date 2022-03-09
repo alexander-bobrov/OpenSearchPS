@@ -17,8 +17,7 @@ function Invoke-SQL {
     }
 
     Process {
-       Invoke-Method -Uri $Uri -Credentials $Credentials -Body $Body -Method 'POST'
-        
+       Invoke-POST -Uri $Uri -Credentials $Credentials -Body $Body    
     }
 
     End {
