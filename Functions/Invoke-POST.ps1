@@ -20,8 +20,8 @@ function Invoke-POST {
         $parameters = @{
             'Method'  = 'POST';
             'Headers' = $headers;
-            'Uri'     =  $Uri}
-            
+            'Uri'     = $Uri}
+
         if ($Body -ne $null) {
             $parameters['Body'] = $Body
         }
@@ -30,7 +30,17 @@ function Invoke-POST {
     Process {       
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Invoke-WebRequest with: $(([PSCustomObject]$parameters) | Out-String)"      
 
-        Invoke-WebRequest @parameters
+        try {
+            $response = Invoke-WebRequest @parameters
+        }
+        catch {
+            #todo retries would be nice
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Request has failed: $($response.ErrorDetails.Message)"
+            throw $_
+        }
+
+        return $response.Content
+        
     }
 
     End {
