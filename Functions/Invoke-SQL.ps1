@@ -10,7 +10,13 @@ function Invoke-SQL {
     Begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
 
-        $Uri = "$Uri/_opendistro/_sql?format=$Format"
+        if ($Format -eq "default") {
+            $Uri = "$Uri/_opendistro/_sql"
+        }
+        else {
+            $Uri = "$Uri/_opendistro/_sql?format=$Format"
+        }
+       
 
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] $Uri"
         $Body = @{"query" = "$Query"} | ConvertTo-Json
