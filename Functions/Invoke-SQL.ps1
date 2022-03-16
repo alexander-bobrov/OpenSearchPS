@@ -4,7 +4,7 @@ function Invoke-SQL {
         [String]$Query,
         [String]$Uri,
         [PSCredential]$Credentials,
-        [String]$Format = "csv" #json|csv|raw values are allowed
+        [String]$Format = "default" #json|csv|raw values are allowed
     )
     
     Begin {
